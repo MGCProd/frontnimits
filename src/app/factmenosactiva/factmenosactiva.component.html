@@ -1,0 +1,73 @@
+<div class="panel-header panel-header-sm"></div>
+
+
+
+
+<div class="main-content">
+  
+ 
+  <div class="row">
+    <div class="col-md-12">
+      <p-card header="Estado de facturas">
+         <div class="card-body">
+
+        <div class="row">
+          <div class="col-2">
+          
+            <button pButton  label="Todos" (onClick)="todos($event)"></button>
+               
+            </div>
+         <div class="col-2">
+          
+          <p-dropdown [options]="estados" optionLabel="autorizador" optionValue="autorizador"
+              placeholder="Filtre por estado" (onChange)="onChange($event)"></p-dropdown>
+             
+          </div>
+          <div class="col-2">
+            <p-calendar [showIcon]="true" inputId="icon" (onSelect)="onSelectDate($event)" pattern="MM/dd/yyyy HH:mm:ss" placeholder="Filtre por fecha"></p-calendar>
+          </div>
+          <div class="col-2">
+          
+            <button pButton type="button" label="Menos Disponible" (onClick)="menosDisponible($event)"></button>
+               
+            </div>
+
+        </div>
+          <div class="table-responsive">
+            <p-table
+              [value]="invoiceStates"
+              [columns]="cols"
+              [lazy]="true"
+              (onLazyLoad)="FactTodas($event)"
+              responsiveLayout="scroll"
+              [paginator]="true"
+              [rows]="10"
+              [totalRecords]="totalRecords"
+              [loading]="loading"
+              [rowsPerPageOptions]="[10, 25, 50]"
+            >
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th
+                    *ngFor="let col of columns"
+                    pSortableColumn="{{ col.field }}"
+                  >
+                    {{ col.header }}
+                    <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>
